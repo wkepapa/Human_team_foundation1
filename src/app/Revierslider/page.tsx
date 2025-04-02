@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export function InfiniteMovingCardsDemo() {
@@ -18,31 +18,76 @@ export function InfiniteMovingCardsDemo() {
 const testimonials = [
   {
     quote:
-      "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
-    name: "Charles Dickens",
-    title: "A Tale of Two Cities",
+      "The main thing an NGO should do is help the needy ones and show the care and love to all the living beings irrespective of their caste, sex and creed. I am glad this is one such NGO and proud to be a member of it.",
+    name: "Bhavya Shah",
+    title: "Review from 5 years ago",
   },
   {
     quote:
-      "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
-    name: "William Shakespeare",
-    title: "Hamlet",
-  },
-  {
-    quote: "All that we see or seem is but a dream within a dream.",
-    name: "Edgar Allan Poe",
-    title: "A Dream Within a Dream",
+      "My experience is amazing! They are actually helping people in need and doing a great job, also the food quality is great, rest assured. Big thanks to Human Team Foundation.",
+    name: "Abhishek Banerjee",
+    title: "Review from 3 years ago",
   },
   {
     quote:
-      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-    name: "Jane Austen",
-    title: "Pride and Prejudice",
+      "If you want to join or ask any queries, contact Niraj Mishra. You will get all information on the Facebook page.",
+    name: "Ajinkya Bhabal",
+    title: "Review from 7 years ago",
   },
   {
     quote:
-      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
-    name: "Herman Melville",
-    title: "Moby-Dick",
+      "Keep up the good work!!! They are really helping the needy ones!!!!!",
+    name: "Urmi Jain",
+    title: "Review from 5 years ago",
+  },
+  {
+    quote: "Got prompt answer to my SMS... 🙏🏻",
+    name: "Vaishakhi Parikh",
+    title: "Review from a year ago",
+  },
+  {
+    quote: "Great work done by them.",
+    name: "Kevin Shah",
+    title: "Review from 5 years ago",
+  },
+  {
+    quote: "GOOD JOB",
+    name: "Akshada Shewale",
+    title: "Review from 8 years ago",
+  },
+  {
+    quote: "Thanks so much for sharing your experience with us.",
+    name: "Vishal Singh",
+    title: "Review from 3 years ago",
+  },
+  {
+    quote: "Thanks so much for sharing your experience with us.",
+    name: "Sneha Gon",
+    title: "Review from 5 years ago",
+  },
+  {
+    quote: "Thanks so much for sharing your experience with us.",
+    name: "Riddhik Prajapati",
+    title: "Review from 5 years ago",
+  },
+  {
+    quote: "Thanks so much for sharing your experience with us.",
+    name: "Pradeep Y",
+    title: "Review from 5 years ago",
+  },
+  {
+    quote: "Thank you",
+    name: "Nida Tambe",
+    title: "Review from 5 years ago",
+  },
+  {
+    quote: "Thanks so much for sharing your experience with us.",
+    name: "Patel Akshay",
+    title: "Review from 6 years ago",
+  },
+  {
+    quote: "Thank you",
+    name: "Ravi",
+    title: "Review from 6 years ago",
   },
 ];
