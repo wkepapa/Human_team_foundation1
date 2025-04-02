@@ -9,6 +9,7 @@ import { InfiniteMovingCardsDemo } from "./Revierslider/page";
 import React from "react";
 import { motion } from "motion/react";
 import { BackgroundGradientDemo } from "./Workbox/page";
+import { StickyScrollRevealDemo } from "./Stickyscroll/page";
 
 export default function Home() {
   return (
@@ -61,6 +62,7 @@ export default function Home() {
           />
         </div>
       </div>
+      <StickyScrollRevealDemo />
     </div>
   );
 }

@@ -33,7 +33,7 @@ export function MeteorsDemo({ title, description }) {
           </p>
 
           {/* Meaty part - Meteor effect */}
-          <Meteors number={60} />
+          <Meteors number={80} />
         </div>
       </div>
     </div>
