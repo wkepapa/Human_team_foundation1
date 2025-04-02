@@ -1,0 +1,57 @@
+.star {
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s;
+    color: transparent;
+    -webkit-text-stroke: 1px gray; 
+  }
+  
+  .star.filled {
+    color: gold;
+    -webkit-text-stroke: 0px;
+  }
+
+  .reviews h2{
+    text-align: center;
+  }
+
+  .review-container h2{
+    margin-top: 11px;
+    font-size: 31px;
+  }
+  
+  .review-box{
+    width: 700px;
+    padding: 15px;
+    color: #004664;
+    background-color: white;
+    border-radius: 11px;
+  }
+
+  .review-form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .review-form button{
+    background-color: #004664;
+    border: 0;
+    padding: 10px 15px;
+    color: white;
+    font-weight: 700;
+    font-size: larger;
+    margin-top: 11px;
+    cursor: pointer;
+    border-radius: 11px;
+  }
+
+  .rating-container{
+    font-size: 21px;
+    
+  }
+
+  button:hover{
+    background-color: aliceblue;
+    color: #004664;
+  }
