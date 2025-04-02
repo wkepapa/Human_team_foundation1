@@ -13,6 +13,7 @@
     "@tabler/icons-react": "^3.31.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.6.2",
+    "framer-motion-3d": "^12.4.13",
     "motion": "^12.6.2",
     "next": "15.2.4",
     "react": "^19.0.0",
