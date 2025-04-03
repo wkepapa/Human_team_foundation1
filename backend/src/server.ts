@@ -4,12 +4,17 @@ import dotenv from 'dotenv';
 import donationRoutes from './routes/donationRoutes';
 import reviewRoutes from './routes/reviewRoutes';
 import volunteerRoutes from './routes/volunteerRoutes';
+import cors from 'cors';
 
 // Load environment variables from .env file
 dotenv.config();
 
 const app = express();
-app.use(express.json());
+
+// Enable CORS for all origins
+app.use(cors());  // This should come before the routes
+
+app.use(express.json());  // Middleware to parse JSON request bodies
 
 // Use routes
 app.use('/api/donations', donationRoutes);
@@ -17,13 +22,13 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 
 // Connect to MongoDB using the environment variable for the connection string
-mongoose.connect(process.env.MONGO_URI as string, {
-  
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.log('Error connecting to MongoDB:', err);
-});
+mongoose.connect(process.env.MONGO_URI as string, {})
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.log('Error connecting to MongoDB:', err);
+  });
 
 // Start server
 const PORT = process.env.PORT || 5000;

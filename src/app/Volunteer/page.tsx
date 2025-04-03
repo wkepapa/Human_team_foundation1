@@ -4,58 +4,77 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { NavbarDemo } from "../Navbar/page";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+
 export default function VolunteerSignupForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Volunteer form submitted");
   };
   return (
-    <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black my-20">
-      <NavbarDemo />
-      <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-        Volunteer Registration
-      </h2>
-      <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Join us in making a difference! Fill out the form below to volunteer.
-      </p>
+    <>
+      <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black my-20">
+        <NavbarDemo />
+        <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
+          Volunteer Registration
+        </h2>
+        <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
+          Join us in making a difference! Fill out the form below to volunteer.
+        </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="name">Full Name</Label>
-          <Input id="name" placeholder="John Doe" type="text" required />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
-          <Input
-            id="email"
-            placeholder="johndoe@example.com"
-            type="email"
-            required
-          />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" placeholder="+1234567890" type="tel" required />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
-          <Label htmlFor="skills">Skills</Label>
-          <Input
-            id="skills"
-            placeholder="Teaching, Organizing, Fundraising..."
-            type="text"
-            required
-          />
-        </LabelInputContainer>
+        <form className="my-8" onSubmit={handleSubmit}>
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="name">Full Name</Label>
+            <Input id="name" placeholder="Shivam" type="text" required />
+          </LabelInputContainer>
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="email">Email Address</Label>
+            <Input
+              id="email"
+              placeholder="shivam7@example.com"
+              type="email"
+              required
+            />
+          </LabelInputContainer>
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input id="phone" placeholder="+1234567890" type="tel" required />
+          </LabelInputContainer>
+          <LabelInputContainer className="mb-8">
+            <Label htmlFor="skills">Skills</Label>
+            <Input
+              id="skills"
+              placeholder="Teaching, Organizing, Fundraising..."
+              type="text"
+              required
+            />
+          </LabelInputContainer>
 
-        <button
-          className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-          type="submit"
-        >
-          Sign Up
-          <BottomGradient />
-        </button>
-      </form>
-    </div>
+          <button
+            className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+            type="submit"
+          >
+            Sign Up
+            <BottomGradient />
+          </button>
+        </form>
+      </div>
+      
+      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
+        <div className="flex justify-center space-x-6 mb-4">
+          <a href="#" className="text-blue-600 hover:text-blue-800">
+            <FaFacebook size={24} />
+          </a>
+          <a href="#" className="text-pink-600 hover:text-pink-800">
+            <FaInstagram size={24} />
+          </a>
+          <a href="#" className="text-blue-500 hover:text-blue-700">
+            <FaLinkedin size={24} />
+          </a>
+        </div>
+        <p className="text-sm">© {new Date().getFullYear()} Human Team Foundation. All rights reserved.</p>
+      </footer>
+    </>
   );
 }
 

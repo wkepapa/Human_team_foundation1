@@ -10,6 +10,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { BackgroundGradientDemo } from "./Workbox/page";
 import { StickyScrollRevealDemo } from "./Stickyscroll/page";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -62,7 +63,27 @@ export default function Home() {
           />
         </div>
       </div>
-      <StickyScrollRevealDemo />
+      <div>
+        <h1></h1>
+        <StickyScrollRevealDemo />
+      </div>
+      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
+        <div className="flex justify-center space-x-6 mb-4">
+          <a href="#" className="text-blue-600 hover:text-blue-800">
+            <FaFacebook size={24} />
+          </a>
+          <a href="#" className="text-pink-600 hover:text-pink-800">
+            <FaInstagram size={24} />
+          </a>
+          <a href="#" className="text-blue-500 hover:text-blue-700">
+            <FaLinkedin size={24} />
+          </a>
+        </div>
+        <p className="text-sm">
+          © {new Date().getFullYear()} Human Team Foundation. All rights
+          reserved.
+        </p>
+      </footer>
     </div>
   );
 }

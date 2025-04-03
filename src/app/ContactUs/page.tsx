@@ -76,10 +76,11 @@ export default function Contact() {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : {}}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-gray-900 text-white min-h-screen font-sans p-6 sm:p-12"
-      >
-        <div className="text-center text-4xl font-extrabold my-8 sm:my-12 text-white">
-          "Together We Become Stronger"
+        className="bg-gray-100 text-gray-900 min-h-screen font-sans p-6 sm:p-12">
+        <div className="text-center text-4xl font-extrabold my-8 sm:my-12 text-gray-900"
+        >
+          Together We Become Stronger"
+
         </div>
 
         <div className="max-w-3xl mx-auto text-center">
@@ -87,7 +88,9 @@ export default function Contact() {
             Send A Message ✉
           </h1>
           <p className="text-gray-400">An email will be sent to the owner</p>
-          <div className="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl mt-6">
+          <div className="bg-white p-6 sm:p-8 rounded-xl shadow-md mt-6"
+          >
+
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
               <input
                 type="text"
@@ -95,7 +98,9 @@ export default function Contact() {
                 value={info.name}
                 onChange={handleChange}
                 placeholder="Full Name"
-                className="p-3 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-400 outline-none"
+
+                className="p-3 rounded-md bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+
                 autoComplete="off"
               />
               <input
@@ -104,7 +109,9 @@ export default function Contact() {
                 value={info.mailId}
                 onChange={handleChange}
                 placeholder="Email Id"
-                className="p-3 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-400 outline-none"
+
+                className="p-3 rounded-md bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+
                 autoComplete="off"
               />
               <textarea
@@ -113,7 +120,9 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Message"
                 rows={5}
-                className="p-3 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-blue-400 outline-none"
+
+                className="p-3 rounded-md bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+
                 autoComplete="off"
               />
               <button
@@ -127,7 +136,9 @@ export default function Contact() {
         </div>
 
         <div className="text-center mt-12">
-          <h2 className="text-xl font-semibold text-gray-300">
+
+          <h2 className="text-xl font-semibold text-gray-700">
+          
             Find us on the map
           </h2>
           <div className="flex justify-center mt-6">
@@ -144,64 +155,50 @@ export default function Contact() {
         </div>
 
         <div className="text-center mt-12">
-          <h2 className="text-xl font-semibold text-gray-300">
-            Your valuable feedback helps us improve...
-          </h2>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg mt-4 max-w-3xl mx-auto">
-            {reviews.map((review) => (
-              <div
-                key={review.id}
-                className="text-gray-300 border-b border-gray-700 py-2"
-              >
-                <p>"{review.feedback || "No feedback provided."}"</p>
-                <p className="text-gray-400 mt-1">
-                  - {review.name} ({"★".repeat(review.rating)})
-                </p>
-              </div>
-            ))}
-            <form onSubmit={handleReviewSubmit} className="flex flex-col mt-4">
-              <input
-                type="text"
-                placeholder="Enter Your Name"
-                value={reviewName}
-                onChange={(e) => setReviewName(e.target.value)}
-                className="p-3 my-2 rounded-md bg-gray-700 text-white focus:outline-none"
-              />
-              <div className="flex items-center justify-center space-x-2 text-yellow-500">
-                <span>Rate Us:</span>
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <span
-                    key={num}
-                    className={`cursor-pointer text-xl ${
-                      num <= (hover || rating)
-                        ? "text-yellow-400"
-                        : "text-gray-500"
-                    }`}
-                    onClick={() => setRating(num)}
-                    onMouseEnter={() => setHover(num)}
-                    onMouseLeave={() => setHover(0)}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-              <textarea
-                placeholder="Feedback if any"
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                className="p-3 my-2 rounded-md bg-gray-700 text-white focus:outline-none"
-                rows={3}
-              />
-              <button
-                type="submit"
-                className="p-3 bg-green-600 hover:bg-green-700 text-white rounded-md mt-2 transition duration-300"
-              >
-                Submit Review
-              </button>
-            </form>
+        <h2 className="text-xl font-semibold text-gray-900">Your valuable feedback helps us improve...</h2>
+<div className="bg-white p-6 rounded-lg shadow-lg mt-4 max-w-3xl mx-auto border border-gray-300">
+  {reviews.map((review) => (
+    <div key={review.id} className="text-gray-700 border-b border-gray-300 py-2">
+      <p>"{review.feedback || 'No feedback provided.'}"</p>
+      <p className="text-gray-600 mt-1">- {review.name} ({"★".repeat(review.rating)})</p>
+    </div>
+  ))}
+  <form onSubmit={handleReviewSubmit} className="flex flex-col mt-4">
+    <input type="text" placeholder="Enter Your Name" value={reviewName} onChange={(e) => setReviewName(e.target.value)} className="p-3 my-2 rounded-md bg-gray-200 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-blue-300" />
+    <div className="flex items-center justify-center space-x-2 text-yellow-500">
+      <span>Rate Us:</span>
+      {[1, 2, 3, 4, 5].map((num) => (
+        <span key={num} className={`cursor-pointer text-xl ${num <= (hover || rating) ? 'text-yellow-400' : 'text-gray-400'}`} onClick={() => setRating(num)} onMouseEnter={() => setHover(num)} onMouseLeave={() => setHover(0)}>★</span>
+      ))}
+    </div>
+    <textarea placeholder="Feedback if any" value={feedback} onChange={(e) => setFeedback(e.target.value)} className="p-3 my-2 rounded-md bg-gray-200 text-gray-900 border border-gray-300 focus:ring-2 focus:ring-blue-300" rows={3} />
+    <button type="submit" className="p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md mt-2 transition duration-300">Submit Review</button>
+
+  </form>
+</div>
+
+         
+
+            
           </div>
-        </div>
+        
+
       </motion.div>
+      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12">
+  <div className="flex justify-center space-x-6 mb-4">
+    <a href="#" className="text-blue-600 hover:text-blue-800">
+      <FaFacebook size={24} />
+    </a>
+    <a href="#" className="text-pink-600 hover:text-pink-800">
+      <FaInstagram size={24} />
+    </a>
+    <a href="#" className="text-blue-500 hover:text-blue-700">
+      <FaLinkedin size={24} />
+    </a>
+  </div>
+  <p className="text-sm">© {new Date().getFullYear()} Human Team Foundation. All rights reserved.</p>
+</footer>
+
     </>
   );
 }
