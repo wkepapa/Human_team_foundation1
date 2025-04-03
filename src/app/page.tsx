@@ -30,7 +30,7 @@ export default function Home() {
       <div className="m-10">
         <h1 className="text-6xl font-bold text-center ">OUR MISSION</h1>
         <TextGenerateEffectDemo />
-        <div className="flex gap-3">
+        <div className="flex gap-3 mx-18">
           <MeteorsDemo
             title="Our Vision"
             description="To create a world where every individual has access to food, quality education, and a clean environment, fostering sustainable development and community empowerment."
@@ -44,7 +44,7 @@ export default function Home() {
       <InfiniteMovingCardsDemo />
       <div>
         <h1 className="text-6xl font-bold text-center ">OUR WORK</h1>
-        <div className="m-10 flex gap-6">
+        <div className="m-10 flex gap-6 mx-20">
           <BackgroundGradientDemo
             title="Food Security Program"
             description="Providing nutritious meals to communities in need through our network of food banks and mobile kitchens."
