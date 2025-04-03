@@ -17,7 +17,7 @@ export default function Donation() {
     email: "",
     cardNumber: "",
     expiryDate: "",
-    cvc: "",
+    cvc: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
