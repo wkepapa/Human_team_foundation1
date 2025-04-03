@@ -1,164 +1,168 @@
-"use client";
-import { useState } from "react";
-import { useParams } from "next/navigation";
-import { NavbarDemo } from "../../Navbar/page";
-import { FaCreditCard, FaPaypal, FaApple } from "react-icons/fa";
+import React, { useState } from 'react';
+import { Heart, Menu, X, Facebook, Instagram, Linkedin, CreditCard, DollarSign } from 'lucide-react';
 
-export default function Donation() {
-  const { name } = useParams();
-  
-  // Check if name is an array and pick the first element if it is
-  const serviceName = Array.isArray(name) ? decodeURIComponent(name[0]) : decodeURIComponent(name || "Donation");
+function Donation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [donationAmount, setDonationAmount] = useState<number>(50);
+  const [customAmount, setCustomAmount] = useState<string>('');
 
-  const [selectedMethod, setSelectedMethod] = useState("Card");
-  const [amount, setAmount] = useState(50);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvc: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Perform your submission logic (e.g., Axios call)
-    setTimeout(() => {
-      alert(`Donation of ₹${amount} made successfully!`);
-      setIsSubmitting(false);
-    }, 2000);
-  };
+  const predefinedAmounts = [10, 25, 50, 100];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex flex-col items-center py-10 my-14">
-      <NavbarDemo />
-      <div className="bg-zinc-900 p-8 rounded-xl shadow-2xl w-full max-w-md border border-gray-700">
-        <h2 className="text-3xl font-bold text-center mb-2">
-          Donate for {serviceName}
-        </h2>
-        <p className="text-gray-400 text-sm text-center mb-6">
-          Your contribution makes a difference!
-        </p>
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Navbar */}
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex items-center">
+              <Heart className="h-8 w-8 text-rose-500" />
+              <span className="ml-2 text-xl font-semibold">CharityHope</span>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#" className="text-gray-700 hover:text-gray-900">Home</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900">About</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900">Projects</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900">Contact</a>
+            </div>
 
-        {/* Donation Amount Selection */}
-        <div className="flex justify-center space-x-3 mb-6">
-          {[50, 100, 250].map((amt) => (
-            <button
-              key={amt}
-              className={`px-4 py-2 rounded-lg border transition-all duration-300 text-white font-semibold ${
-                amount === amt
-                  ? "border-blue-500 bg-gray-800"
-                  : "border-gray-700"
-              }`}
-              onClick={() => setAmount(amt)}
-            >
-              ₹{amt}
-            </button>
-          ))}
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-gray-700 hover:text-gray-900"
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Custom Amount Input */}
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-full p-3 mb-4 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 outline-none"
-          placeholder="Enter custom amount"
-        />
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">Home</a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">About</a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">Projects</a>
+              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-gray-900">Contact</a>
+            </div>
+          </div>
+        )}
+      </nav>
 
-        {/* Payment Method Selection */}
-        <div className="flex space-x-3 mb-6">
-          {[{ name: "Card", icon: <FaCreditCard /> }, { name: "Paypal", icon: <FaPaypal /> }, { name: "Apple", icon: <FaApple /> }].map((method) => (
-            <button
-              key={method.name}
-              className={`flex-1 p-4 border rounded-xl flex items-center justify-center space-x-2 transition-all duration-300 ${
-                selectedMethod === method.name
-                  ? "border-blue-500 bg-gray-800"
-                  : "border-gray-700"
-              }`}
-              onClick={() => setSelectedMethod(method.name)}
-            >
-              {method.icon} <span className="font-semibold">{method.name}</span>
-            </button>
-          ))}
-        </div>
+      {/* Main Content */}
+      <main className="flex-grow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Make a Difference Today</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Your generosity can change lives. Every donation helps us continue our mission
+              to create positive impact in communities around the world.
+            </p>
+          </div>
 
-        {/* Form Inputs */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleInputChange}
-            placeholder="Full Name"
-            className="w-full p-3 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 outline-none"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            placeholder="Email"
-            className="w-full p-3 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 outline-none"
-            required
-          />
+          {/* Donation Section */}
+          <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Choose Donation Amount</h2>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+              {predefinedAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  onClick={() => {
+                    setDonationAmount(amount);
+                    setCustomAmount('');
+                  }}
+                  className={`py-3 px-4 rounded-lg border ${
+                    donationAmount === amount && customAmount === ''
+                      ? 'border-rose-500 bg-rose-50 text-rose-600'
+                      : 'border-gray-300 hover:border-rose-500'
+                  }`}
+                >
+                  ${amount}
+                </button>
+              ))}
+            </div>
 
-          {/* Show these only when Card payment method is selected */}
-          {selectedMethod === "Card" && (
-            <>
-              <input
-                type="text"
-                name="cardNumber"
-                value={formData.cardNumber}
-                onChange={handleInputChange}
-                placeholder="Card Number"
-                className="w-full p-3 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                required
-              />
-              <div className="flex space-x-2">
+            <div className="mb-8">
+              <label htmlFor="custom-amount" className="block text-sm font-medium text-gray-700 mb-2">
+                Custom Amount
+              </label>
+              <div className="relative">
+                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
-                  type="text"
-                  name="expiryDate"
-                  value={formData.expiryDate}
-                  onChange={handleInputChange}
-                  placeholder="MM/YY"
-                  className="w-1/2 p-3 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                  required
-                />
-                <input
-                  type="text"
-                  name="cvc"
-                  value={formData.cvc}
-                  onChange={handleInputChange}
-                  placeholder="CVC"
-                  className="w-1/2 p-3 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 outline-none"
-                  required
+                  type="number"
+                  id="custom-amount"
+                  value={customAmount}
+                  onChange={(e) => {
+                    setCustomAmount(e.target.value);
+                    setDonationAmount(0);
+                  }}
+                  className="pl-10 w-full py-2 px-3 border border-gray-300 rounded-lg focus:ring-rose-500 focus:border-rose-500"
+                  placeholder="Enter amount"
                 />
               </div>
-            </>
-          )}
+            </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`w-full p-3 ${isSubmitting ? "bg-gray-500" : "bg-blue-500"} text-white font-semibold rounded-lg mt-3 hover:bg-blue-600 transition-all duration-300 shadow-lg`}
-          >
-            {isSubmitting ? "Processing..." : `Donate ₹${amount}`}
-          </button>
-        </form>
-      </div>
+            <button className="w-full bg-rose-500 text-white py-3 px-4 rounded-lg hover:bg-rose-600 transition-colors flex items-center justify-center">
+              <CreditCard className="h-5 w-5 mr-2" />
+              Donate Now
+            </button>
+
+            <div className="mt-6 text-center text-sm text-gray-500">
+              <p>Your donation is secure and encrypted</p>
+            </div>
+          </div>
+
+          {/* Impact Section */}
+          <div className="mt-16 grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="bg-rose-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Heart className="h-8 w-8 text-rose-500" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">10,000+</h3>
+              <p className="text-gray-600">Lives Impacted</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-rose-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Heart className="h-8 w-8 text-rose-500" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">50+</h3>
+              <p className="text-gray-600">Projects Completed</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-rose-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Heart className="h-8 w-8 text-rose-500" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">25+</h3>
+              <p className="text-gray-600">Countries Reached</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12">
+        <div className="flex justify-center space-x-6 mb-4">
+          <a href="#" className="text-blue-600 hover:text-blue-800">
+            <Facebook size={24} />
+          </a>
+          <a href="#" className="text-pink-600 hover:text-pink-800">
+            <Instagram size={24} />
+          </a>
+          <a href="#" className="text-blue-500 hover:text-blue-700">
+            <Linkedin size={24} />
+          </a>
+        </div>
+        <p className="text-sm">© {new Date().getFullYear()} Human Team Foundation. All rights reserved.</p>
+      </footer>
+      
+              
+            
     </div>
   );
 }
+
+export default Donation;
