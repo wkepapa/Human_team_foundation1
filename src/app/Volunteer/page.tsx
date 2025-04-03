@@ -22,13 +22,13 @@ export default function VolunteerSignupForm() {
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" placeholder="John Doe" type="text" required />
+          <Input id="name" placeholder="Shivam" type="text" required />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input
             id="email"
-            placeholder="johndoe@example.com"
+            placeholder="shivam7@example.com"
             type="email"
             required
           />
