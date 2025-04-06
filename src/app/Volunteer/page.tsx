@@ -4,13 +4,34 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { NavbarDemo } from "../Navbar/page";
+import axiosInstance from "@/utils/axios"
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function VolunteerSignupForm() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Volunteer form submitted");
+  
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const form = e.currentTarget;
+  const formData = {
+    name: (form.elements.namedItem("name") as HTMLInputElement).value,
+    email: (form.elements.namedItem("email") as HTMLInputElement).value,
+    phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+    skills: (form.elements.namedItem("skills") as HTMLInputElement).value,
   };
+
+  try {
+    const response = await axiosInstance.post("/volunteers", formData);
+    console.log("Volunteer submitted:", response.data);
+    alert("Thanks for signing up!");
+    form.reset();
+  } catch (error) {
+    console.error("Error submitting volunteer form:", error);
+    alert("Failed to submit. Please try again.");
+  }
+};
+
   return (
     <>
       <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black my-20">
