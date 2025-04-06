@@ -1,9 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import donationRoutes from './routes/donationRoutes';
-import reviewRoutes from './routes/reviewRoutes';
-import volunteerRoutes from './routes/volunteerRoutes';
+import donationRoutes from './src/routes/donationRoutes';
+import reviewRoutes from './src/routes/reviewRoutes';
+import volunteerRoutes from './src/routes/volunteerRoutes';
 import cors from 'cors';
 
 // Load environment variables from .env file
