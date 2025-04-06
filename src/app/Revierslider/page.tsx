@@ -60,7 +60,7 @@ export function InfiniteMovingCardsDemo() {
         <InfiniteMovingCards
           items={combinedTestimonials}
           direction="right"
-          speed="fast"
+          speed="slow"
         />
       )}
     </div>
