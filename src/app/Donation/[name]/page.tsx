@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { NavbarDemo } from "../../Navbar/page";
 import { FaCreditCard, FaPaypal, FaApple, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import axiosInstance from "@/utils/axios";
 
 
 
@@ -29,14 +30,28 @@ export default function Donation() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      alert(`Donation of ₹${amount} made successfully!`);
+  
+    try {
+      await axiosInstance.post("/donations", {
+        fullName: formData.fullName,
+        email: formData.email,
+        amount,
+        method: selectedMethod,
+      });
+  
+      alert(`Donation of ₹${amount} submitted successfully!`);
+      setFormData({ fullName: "", email: "", cardNumber: "", expiryDate: "", cvc: "" });
+    } catch (err) {
+      alert("Failed to process donation. Try again.");
+      console.error(err);
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center py-10 my-14">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { NavbarDemo } from "../Navbar/page";
 import { FaCreditCard, FaPaypal, FaApple, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import axiosInstance from "@/utils/axios";
 
 
 
@@ -29,17 +30,30 @@ export default function Donation() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      alert(`Donation of ₹${amount} made successfully!`);
+  
+    try {
+      await axiosInstance.post("/donations", {
+        fullName: formData.fullName,
+        email: formData.email,
+        amount,
+        method: selectedMethod,
+      });
+  
+      alert(`Donation of ₹${amount} submitted successfully!`);
+      setFormData({ fullName: "", email: "", cardNumber: "", expiryDate: "", cvc: "" });
+    } catch (err) {
+      alert("Failed to process donation. Try again.");
+      console.error(err);
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
+  
 
   return (
-
     <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center py-10 my-14">
       <NavbarDemo />
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md border border-gray-300">
@@ -71,16 +85,12 @@ export default function Donation() {
         />
 
         {/* Payment Method Selection */}
-
         <div className="flex space-x-3 mb-6">
           {[{ name: "Card", icon: <FaCreditCard /> }, { name: "Paypal", icon: <FaPaypal /> }, { name: "Apple", icon: <FaApple /> }].map((method) => (
             <button
               key={method.name}
               className={`flex-1 p-4 border rounded-xl flex items-center justify-center space-x-2 transition-all duration-300 ${
-
-
                 selectedMethod === method.name ? "border-blue-500 bg-blue-100" : "border-gray-300"
-
               }`}
               onClick={() => setSelectedMethod(method.name)}
             >
@@ -97,7 +107,6 @@ export default function Donation() {
             value={formData.fullName}
             onChange={handleInputChange}
             placeholder="Full Name"
-
             className="w-full p-3 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
             required
           />
@@ -152,7 +161,6 @@ export default function Donation() {
             className={`w-full p-3 ${isSubmitting ? "bg-gray-400" : "bg-blue-600"} text-white font-semibold rounded-lg mt-3 hover:bg-blue-700 transition-all duration-300 shadow-md`}
           >
             {isSubmitting ? "Processing..." : `Donate ₹${amount}`}
-
           </button>
         </form>
         
