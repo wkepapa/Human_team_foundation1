@@ -11,8 +11,36 @@ import { motion } from "motion/react";
 import { BackgroundGradientDemo } from "./Workbox/page";
 import { StickyScrollRevealDemo } from "./Stickyscroll/page";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import  { useEffect, useState } from "react";
+
+
+interface EventData {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  isPast: boolean;
+}
+
+
+  
 
 export default function Home() {
+  const [events, setEvents] = useState<EventData[]>([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/events");
+        const data = await res.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
   return (
     <div className="  h-screen ">
       <NavbarDemo />
@@ -67,6 +95,8 @@ export default function Home() {
         <h1></h1>
         <StickyScrollRevealDemo />
       </div>
+      
+
       <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
         <div className="flex justify-center space-x-6 mb-4">
           <a href="#" className="text-blue-600 hover:text-blue-800">

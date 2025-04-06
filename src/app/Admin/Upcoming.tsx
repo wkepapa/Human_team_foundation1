@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "./Upcoming.css";
+import axios from "axios";
 
 interface EventData {
     name: string;
@@ -24,16 +25,18 @@ export default function Upcoming(): JSX.Element {
         }));
     }
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>): void {
-        e.preventDefault();
-        // Optionally do something with event data here
-        setEvent({
-            name: "",
-            description: "",
-            startDate: "",
-            endDate: "",
-        });
-    }
+   
+
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const eventData = {
+    ...event,
+    isPast: true, // or false for Upcoming
+  };
+  await axios.post("http://localhost:5000/api/events", eventData);
+  setEvent({ name: "", description: "", startDate: "", endDate: "" });
+};
+
 
     return (
         <div className="upcoming">
