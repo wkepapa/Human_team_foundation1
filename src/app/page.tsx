@@ -11,8 +11,8 @@ import { motion } from "motion/react";
 import { BackgroundGradientDemo } from "./Workbox/page";
 import { StickyScrollRevealDemo } from "./Stickyscroll/page";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import  { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+import { TimelineDemo } from "./Upmcomingevents/page";
 
 interface EventData {
   name: string;
@@ -21,9 +21,6 @@ interface EventData {
   endDate: string;
   isPast: boolean;
 }
-
-
-  
 
 export default function Home() {
   const [events, setEvents] = useState<EventData[]>([]);
@@ -95,7 +92,7 @@ export default function Home() {
         <h1></h1>
         <StickyScrollRevealDemo />
       </div>
-      
+      <TimelineDemo />
 
       <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
         <div className="flex justify-center space-x-6 mb-4">
@@ -109,6 +106,7 @@ export default function Home() {
             <FaLinkedin size={24} />
           </a>
         </div>
+
         <p className="text-sm">
           © {new Date().getFullYear()} Human Team Foundation. All rights
           reserved.
