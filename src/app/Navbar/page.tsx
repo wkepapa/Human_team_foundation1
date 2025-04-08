@@ -18,7 +18,7 @@ function Navbar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "fixed top-10 inset-x-0 max-w-2xl mx-auto z-50 bg-black text-white rounded-full flex items-center px-6 py-3 shadow-lg",
+        "fixed top-10 inset-x-0 max-w-3xl mx-auto z-50 bg-black text-white rounded-full flex items-center px-6 py-3 shadow-lg",
         className
       )}
     >
@@ -53,6 +53,12 @@ function Navbar({ className }: { className?: string }) {
           className="focus:outline-none hover:text-gray-400 hover:scale-105 transition-transform duration-300 px-3 py-1 rounded-md"
         >
           Volunteer Registration
+        </button>
+        <button
+          onClick={() => router.push("/Admin")}
+          className="focus:outline-none hover:text-gray-400 hover:scale-105 transition-transform duration-300 px-3 py-1 rounded-md"
+        >
+          Admin
         </button>
       </nav>
     </div>

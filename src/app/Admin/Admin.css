@@ -1,49 +1,28 @@
 body {
-    background-color: #121212; 
+    background-color: #0b0c10;
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-#root {
-    width: 97vw;
-}
-
-.bg-admin {
-    min-width: 100%;
-    min-height: 100vh; 
-    background: center/cover no-repeat, black; 
-    background-attachment: fixed; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-}
-
-/* Admin Panel */
-.admin {
-    background-color: rgba(2, 0, 20, 0.87);
-    width: 87vw;
-    min-height: 87vh;
-    max-width: 95vw;
-    border-radius: 15px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Animated Heading */
 h1 {
+    text-align: center;
+    margin-top: 50px;
     font-size: 3rem;
     font-weight: bold;
-    color: white;
+    color: #ffffff;
     display: flex;
+    justify-content: center;
     gap: 5px;
+    text-shadow: 0 0 10px #00fefe, 0 0 20px #00fefe;
+}
+
+h1 + p {
+    color: #cccccc;
+    text-align: center;
+    margin-top: 10px;
 }
 
 h1 span {
@@ -57,21 +36,21 @@ h1 span {
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 5px #ffffff, 0 0 10px #00eaff; }
-    to { text-shadow: 0 0 10px #ffffff, 0 0 20px #00eaff; }
+    from { text-shadow: 0 0 10px #00fefe; }
+    to { text-shadow: 0 0 20px #00fefe, 0 0 40px #00fefe; }
 }
 
 .functions {
     display: flex;
     justify-content: center;
-    gap: 75px;
+    gap: 30px;
     flex-wrap: wrap;
     margin-top: 20px;
 }
 
 .card {
-    background: rgba(0, 0, 40, 0.9);
-    color: rgb(220, 245, 255);
+    background: #1f2833;
+    color: white;
     padding: 20px;
     border-radius: 12px;
     margin: 55px;
@@ -82,19 +61,18 @@ h1 span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 0px 10px #00c2ff; /* Initial Glow */
-    border: 2px solid #00c2ff; /* Glowing Border */
+    box-shadow: 0px 0px 10px #00fefe;
+    border: 2px solid #00fefe;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 0px 30px #00b0e6; /* Stronger Glow */
-    border-color: #00c2ff;
+    box-shadow: 0px 0px 30px #00fefe;
 }
 
 .event-btn {
-    background: #00d4ff;
+    background: #00fefe;
     color: black;
     font-weight: bold;
     padding: 10px 15px;
@@ -102,12 +80,24 @@ h1 span {
     border-radius: 8px;
     cursor: pointer;
     margin-top: 10px;
-    transition:  0.3s ease, transform 0.2s ease;
+    transition: 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 15px #00fefe;
 }
 
 .event-btn:hover {
-    background: #00aee6;
+    background: #00d5e0;
     transform: scale(1.05);
+    box-shadow: 0 0 25px #00fefe;
+}
+
+input[type="text"] {
+    background-color: #1f2833;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: 0 0 10px #00fefe;
 }
 
 ::-webkit-scrollbar {
@@ -115,15 +105,15 @@ h1 span {
 }
 
 ::-webkit-scrollbar-track {
-    background: #111; /* Dark background */
+    background: #111;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #00eaff, #00c2ff);
+    background: linear-gradient(45deg, #00fefe, #00c2ff);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #00c2ff, #009bcc);
+    background: linear-gradient(45deg, #00eaff, #00bfff);
 }
