@@ -24,23 +24,30 @@ app.use('/api/volunteers', getAllVolunteers);
 app.use('/api', sendMessageRoute)
 
 // Connect to MongoDB using the environment variable for the connection string
-// mongoose.connect(process.env.MONGO_URI as string, {})
-//   .then(() => {
-//     console.log('Connected to MongoDB');
-//   })
-//   .catch((err) => {
-//     console.log('Error connecting to MongoDB:', err);
-//   });
+ mongoose.connect(process.env.MONGO_URI as string, {})
+   .then(() => {
+     console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+   console.log('Error connecting to MongoDB:', err);
+   });
 
+<<<<<<< HEAD
 
 dotenv.config();
   mongoose.connect(process.env.MONGODB_URI as string, {})
+=======
+/*const uri = "mongodb+srv://Meghana:hAZ1xEtnymxnmq0p@ngoapi.finfezg.mongodb.net/ngoApi?retryWrites=true&w=majority&appName=ngoApi";
+  
+  mongoose.connect(uri)
+>>>>>>> 74267c2763e949bd7a9ba3bcc6c917a719b1b01b
   .then(() => {
     console.log('Connected to MongoDB');
   })
   .catch((err) => {
     console.log('Error connecting to MongoDB:', err);
   });
+  */
 
 // Start server
 const PORT = process.env.PORT || 5000;
