@@ -5,6 +5,7 @@ import donationRoutes from './src/routes/donationRoutes';
 import reviewRoutes from './src/routes/reviewRoutes';
 import getAllVolunteers from './src/routes/volunteerRoutes';
 import cors from 'cors';
+import sendMessageRoute from './src/routes/sendMessage'
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(express.json());  // Middleware to parse JSON request bodies
 app.use('/api/donations', donationRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/volunteers', getAllVolunteers);
+app.use('/api', sendMessageRoute)
 
 // Connect to MongoDB using the environment variable for the connection string
 // mongoose.connect(process.env.MONGO_URI as string, {})
@@ -30,9 +32,9 @@ app.use('/api/volunteers', getAllVolunteers);
 //     console.log('Error connecting to MongoDB:', err);
 //   });
 
-const uri = "mongodb+srv://Meghana:hAZ1xEtnymxnmq0p@ngoapi.finfezg.mongodb.net/ngoApi?retryWrites=true&w=majority&appName=ngoApi";
-  
-  mongoose.connect(uri)
+
+dotenv.config();
+  mongoose.connect(process.env.MONGODB_URI as string, {})
   .then(() => {
     console.log('Connected to MongoDB');
   })
