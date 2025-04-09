@@ -1,3 +1,4 @@
+"use client";
 // 'use client'
 
 // import { useEffect, useState } from 'react'
@@ -23,22 +24,21 @@
 //     fetchVolunteers()
 //   })
 
+// const handleAccept = async (id: string) => {
+//   try {
+//     const res = await axios.patch(`http://localhost:5000/api/volunteers/${id}/accept`)
 
-//   const handleAccept = async (id: string) => {
-//     try {
-//       const res = await axios.patch(`http://localhost:5000/api/volunteers/${id}/accept`)
-
-//       if (res.status === 200) {
-//         setData((prev) =>(
-//           prev.map((v) => (v._id === id ? { ...v, accepted: true } : v)))
-//         )
-//       } else {
-//         console.error('Failed to accept volunteer')
-//       }
-//     } catch (err) {
-//       console.error('Error accepting volunteer:', err)
+//     if (res.status === 200) {
+//       setData((prev) =>(
+//         prev.map((v) => (v._id === id ? { ...v, accepted: true } : v)))
+//       )
+//     } else {
+//       console.error('Failed to accept volunteer')
 //     }
+//   } catch (err) {
+//     console.error('Error accepting volunteer:', err)
 //   }
+// }
 
 //   return (
 //     <div className="min-h-screen px-4 py-10 bg-[#0b0c10] text-white font-sans">
@@ -109,69 +109,81 @@
 //     </div>
 //   )
 // }
-'use client'
 
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import axiosInstance from '@/utils/axios'
+import { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance from "@/utils/axios";
 
 export default function Volunteer() {
-  const [search, setSearch] = useState('')
-  const [data, setData] = useState([])
-  const [selectedVolunteer, setSelectedVolunteer] = useState(null)
-  const [subject, setSubject] = useState('')
-  const [body, setBody] = useState('')
-  const [image, setImage] = useState(null)
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState([]);
+  const [selectedVolunteer, setSelectedVolunteer] = useState(null);
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchVolunteers = async () => {
       try {
-        const response = await axiosInstance.get('/volunteers')
-        setData(response.data)
+        const response = await axiosInstance.get("/volunteers");
+        setData(response.data);
       } catch (error) {
-        console.error('Error fetching volunteers:', error.response?.data || error.message)
+        console.error(
+          "Error fetching volunteers:",
+          error.response?.data || error.message
+        );
       }
-    }
+    };
 
-    fetchVolunteers()
-  }, [])
+    fetchVolunteers();
+  }, []);
 
-  const handleAccept = async (id) => {
+  const handleAccept = async (id: string) => {
     try {
-      const res = await axios.patch(`http://localhost:5000/api/volunteers/${id}/accept`)
+      const res = await axiosInstance.patch(
+        `http://localhost:5000/api/volunteers/${id}/accept`
+      );
+
       if (res.status === 200) {
-        setData((prev) => prev.map((v) => (v._id === id ? { ...v, accepted: true } : v)))
+        setData((prev) =>
+          prev.map((v) => (v._id === id ? { ...v, accepted: true } : v))
+        );
+      } else {
+        console.error("Failed to accept volunteer");
       }
     } catch (err) {
-      console.error('Error accepting volunteer:', err)
+      console.error("Error accepting volunteer:", err);
     }
-  }
+  };
 
   const handleSendMail = async () => {
     try {
-      const formData = new FormData()
-      formData.append('subject', subject)
-      formData.append('body', body)
-      formData.append('email', selectedVolunteer.email)
-      if (image) formData.append('image', image)
-  
-      await axios.post('http://localhost:5000/api/send-message', formData)
-      alert('Mail sent!')
-      setSelectedVolunteer(null)
-      setSubject('')
-      setBody('')
-      setImage(null)
+      const formData = new FormData();
+      formData.append("subject", subject);
+      formData.append("body", body);
+      formData.append("email", selectedVolunteer.email);
+      if (image) formData.append("image", image);
+
+      await axios.post("http://localhost:5000/api/send-message", formData);
+      alert("Mail sent!");
+      setSelectedVolunteer(null);
+      setSubject("");
+      setBody("");
+      setImage(null);
     } catch (err) {
-      console.error('Error sending mail:', err)
-      alert('Failed to send mail')
+      console.error("Error sending mail:", err);
+      alert("Failed to send mail");
     }
-  }
-  
+  };
 
   return (
     <div className="min-h-screen px-4 py-10 bg-[#0b0c10] text-white font-sans">
-      <h1 className="text-4xl font-bold text-center mb-2 text-white neon-glow">Volunteers</h1>
-      <p className="text-center text-gray-400">Manage access and actions for volunteers.</p>
+      <h1 className="text-4xl font-bold text-center mb-2 text-white neon-glow">
+        Volunteers
+      </h1>
+      <p className="text-center text-gray-400">
+        Manage access and actions for volunteers.
+      </p>
 
       <div className="flex justify-center mb-8">
         <div className="flex w-[650px] items-center justify-center gap-2 mt-5 mb-5">
@@ -229,7 +241,9 @@ export default function Volunteer() {
       {selectedVolunteer && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
           <div className="bg-[#1f2833] p-6 rounded-lg w-full max-w-md space-y-4 text-white">
-            <h2 className="text-2xl font-bold mb-2">Send Mail to {selectedVolunteer.name}</h2>
+            <h2 className="text-2xl font-bold mb-2">
+              Send Mail to {selectedVolunteer.name}
+            </h2>
             <input
               type="text"
               placeholder="Subject"
@@ -278,5 +292,5 @@ export default function Volunteer() {
         }
       `}</style>
     </div>
-  )
+  );
 }
