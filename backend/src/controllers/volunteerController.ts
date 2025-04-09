@@ -4,8 +4,6 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv'
 dotenv.config();
 
-
-
 export const createVolunteer = async (req: Request, res: Response) => {
   try {
     const { name, email, phone, skills } = req.body;
@@ -54,7 +52,7 @@ export const acceptVolunteer = async (req: Request, res: Response): Promise<void
         pass: process.env.EMAIL_PASS,
       },
     })
-
+    console.log(updated);
     const mailOptions = {
       from: process.env.EMAIL_USER, 
       to: updated.email,
@@ -63,6 +61,14 @@ export const acceptVolunteer = async (req: Request, res: Response): Promise<void
     }
 
     await transporter.sendMail(mailOptions)
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error("Transporter error:", error);
+      } else {
+        console.log("Server is ready to take messages");
+      }
+    });
+    
 
     res.json({ message: 'Volunteer accepted and email sent.', updated })
   } catch (err) {
