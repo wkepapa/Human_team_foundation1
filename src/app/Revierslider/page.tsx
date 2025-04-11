@@ -17,11 +17,6 @@ const staticTestimonials = [
     name: "Sneha Gon",
     title: "Review from 5 years ago",
   },
-  {
-    quote: "Thanks so much for sharing your experience with us. (Rating: 5)",
-    name: "Riddhik Prajapati",
-    title: "Review from 5 years ago",
-  },
 ];
 
 export function InfiniteMovingCardsDemo() {
@@ -60,7 +55,7 @@ export function InfiniteMovingCardsDemo() {
         <InfiniteMovingCards
           items={combinedTestimonials}
           direction="right"
-          speed="slow"
+          speed="fast"
         />
       )}
     </div>
