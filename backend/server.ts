@@ -5,6 +5,8 @@ import donationRoutes from './src/routes/donationRoutes';
 import reviewRoutes from './src/routes/reviewRoutes';
 import getAllVolunteers from './src/routes/volunteerRoutes';
 import cors from 'cors';
+import instagramRoutes from "./src/routes/instagramRoutes";
+
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,6 +22,7 @@ app.use(express.json());  // Middleware to parse JSON request bodies
 app.use('/api/donations', donationRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/volunteers', getAllVolunteers);
+app.use("/api/instagram", instagramRoutes);
 
 // Connect to MongoDB using the environment variable for the connection string
  mongoose.connect(process.env.MONGO_URI as string, {})

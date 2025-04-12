@@ -36,7 +36,23 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   await axios.post("http://localhost:5000/api/events", eventData);
   setEvent({ name: "", description: "", startDate: "", endDate: "" });
 };
-
+const postToInstagram = async () => {
+    try {
+      const eventData = {
+        name: event.name,
+        description: event.description,
+        startDate: event.startDate,
+        endDate: event.endDate
+      };
+  
+      const res = await axios.post("http://localhost:5000/api/instagram/post", eventData);
+      alert("Event posted to Instagram successfully!");
+    } catch (err) {
+      console.error("Error posting to Instagram", err);
+      alert("Failed to post to Instagram.");
+    }
+  };
+  
 
     return (
         <div className="upcoming">
@@ -78,6 +94,10 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
                 />
 
                 <button type="submit">Add</button>
+                <button type="button" onClick={postToInstagram}>
+  Post to Instagram
+</button>
+
             </form>
         </div>
     );

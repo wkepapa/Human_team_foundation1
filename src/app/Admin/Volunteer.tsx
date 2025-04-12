@@ -2,35 +2,41 @@
 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import axiosInstance from "@/utils/axios"
+import axiosInstance from '@/utils/axios'
+
+// Define a proper interface for volunteer data
+interface VolunteerType {
+  _id: string;
+  name: string;
+  email: string;
+  accepted: boolean;
+}
 
 export default function Volunteer() {
-  const [search, setSearch] = useState('')
-  const [data, setData] = useState([])
+  const [search, setSearch] = useState<string>('')
+  const [data, setData] = useState<VolunteerType[]>([]) // ✅ Typed array
 
-  // Fetch data from backend
   useEffect(() => {
     const fetchVolunteers = async () => {
       try {
-        const response = await axiosInstance.get('/volunteers')
-        setData(response.data) // Update state with fetched data
-        console.log(response);
+        const response = await axiosInstance.get<VolunteerType[]>('/volunteers')
+        setData(response.data)
+        console.log(response)
       } catch (error: any) {
         console.error('Error fetching volunteers:', error.response?.data || error.message)
       }
     }
 
     fetchVolunteers()
-  })
-
+  }, []) // ✅ Added empty dependency array to avoid infinite re-fetch
 
   const handleAccept = async (id: string) => {
     try {
       const res = await axios.patch(`http://localhost:5000/api/volunteers/${id}/accept`)
 
       if (res.status === 200) {
-        setData((prev) =>(
-          prev.map((v) => (v._id === id ? { ...v, accepted: true } : v)))
+        setData((prev) =>
+          prev.map((v) => (v._id === id ? { ...v, accepted: true } : v))
         )
       } else {
         console.error('Failed to accept volunteer')
@@ -62,10 +68,10 @@ export default function Volunteer() {
 
       <div className="max-w-xl mx-auto space-y-4">
         {data
-          .filter((v: any) =>
+          .filter((v) =>
             v.name.toLowerCase().includes(search.toLowerCase())
           )
-          .map((volunteer: any) => (
+          .map((volunteer) => (
             <div
               key={volunteer._id}
               className="flex items-center justify-between bg-[#1f2833] px-6 py-4 rounded-lg shadow-md border border-[#45a29e] neon-card"
