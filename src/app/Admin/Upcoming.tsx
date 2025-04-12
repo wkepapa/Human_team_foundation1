@@ -1,16 +1,15 @@
 "use client";
 import React, { useState, ChangeEvent, FormEvent } from "react";
-
 import "./Upcoming.css";
 import axios from "axios";
-
-
 
 interface EventData {
   name: string;
   description: string;
   startDate: string;
   endDate: string;
+  imageUrl: string; // base64 image string
+  imageName?: string; // just for display
 }
 
 export default function Upcoming(): JSX.Element {
@@ -19,20 +18,39 @@ export default function Upcoming(): JSX.Element {
     description: "",
     startDate: "",
     endDate: "",
+    imageUrl: "",
+    imageName: "",
   });
 
-  function handleChange(
+  const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void {
+  ): void => {
     const { name, value } = e.target;
     setEvent((prev) => ({
       ...prev,
       [name]: value,
     }));
-  }
+  };
+
+  // Handle image upload and convert to base64
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEvent((prev) => ({
+          ...prev,
+          imageUrl: reader.result as string,
+          imageName: file.name,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const eventData = {
       ...event,
       isPast: false,
@@ -41,7 +59,14 @@ export default function Upcoming(): JSX.Element {
     try {
       await axios.post("http://localhost:5000/api/events", eventData);
       alert("Event added successfully!");
-      setEvent({ name: "", description: "", startDate: "", endDate: "" });
+      setEvent({
+        name: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        imageUrl: "",
+        imageName: "",
+      });
     } catch (error) {
       alert("Failed to add event. Please try again.");
       console.error(error);
@@ -55,6 +80,7 @@ export default function Upcoming(): JSX.Element {
         description: event.description,
         startDate: event.startDate,
         endDate: event.endDate,
+        image: event.imageUrl,
       });
       alert("Event posted to Instagram successfully!");
     } catch (err) {
@@ -102,7 +128,28 @@ export default function Upcoming(): JSX.Element {
           onChange={handleChange}
         />
 
-        <button type="submit">Add</button>
+        <label htmlFor="image">Add Image:</label>
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+
+        {event.imageName && (
+          <p style={{ fontStyle: "italic", marginTop: "5px" }}>
+            Selected file: {event.imageName}
+          </p>
+        )}
+
+        {event.imageUrl && (
+          <div style={{ marginTop: "10px" }}>
+            <strong>Preview:</strong>
+            <img src={event.imageUrl} alt="Preview" width="200" />
+          </div>
+        )}
+
+        <button type="submit">Add Event</button>
         <button type="button" onClick={postToInstagram}>
           Post to Instagram
         </button>
