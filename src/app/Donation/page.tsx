@@ -66,11 +66,12 @@ export default function Donation() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center py-10 my-14">
+    <div className="min-h-screen flex flex-col items-center py-10 my-14 bg-gray-100 text-gray-900 dark:bg-black dark:text-white transition-colors duration-300">
       <NavbarDemo />
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md border border-gray-300">
+
+      <div className="bg-white dark:bg-black p-8 rounded-xl shadow-md w-full max-w-md border border-gray-300 dark:border-gray-700 transition-all duration-300">
         <h2 className="text-3xl font-bold text-center mb-2">{`Donate for ${serviceName}`}</h2>
-        <p className="text-gray-600 text-sm text-center mb-6">
+        <p className="text-sm text-center mb-6">
           Your contribution makes a difference!
         </p>
 
@@ -79,10 +80,10 @@ export default function Donation() {
           {[50, 100, 250].map((amt) => (
             <button
               key={amt}
-              className={`px-4 py-2 rounded-lg border transition-all duration-300 font-semibold ${
+              className={`px-4 py-2 rounded-lg border font-semibold transition-all duration-300 ${
                 amount === amt
-                  ? "border-blue-500 bg-blue-100"
-                  : "border-gray-300"
+                  ? "border-blue-500 bg-blue-100 dark:bg-blue-900"
+                  : "border-gray-300 dark:border-gray-600"
               }`}
               onClick={() => setAmount(amt)}
             >
@@ -96,7 +97,7 @@ export default function Donation() {
           type="number"
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-full p-3 mb-4 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full p-3 mb-4 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors duration-300"
           placeholder="Enter custom amount"
         />
 
@@ -111,12 +112,13 @@ export default function Donation() {
               key={method.name}
               className={`flex-1 p-4 border rounded-xl flex items-center justify-center space-x-2 transition-all duration-300 ${
                 selectedMethod === method.name
-                  ? "border-blue-500 bg-blue-100"
-                  : "border-gray-300"
+                  ? "border-blue-500 bg-blue-100 dark:bg-blue-900"
+                  : "border-gray-300 dark:border-gray-600"
               }`}
               onClick={() => setSelectedMethod(method.name)}
             >
-              {method.icon} <span className="font-semibold">{method.name}</span>
+              {method.icon}
+              <span className="font-semibold">{method.name}</span>
             </button>
           ))}
         </div>
@@ -129,7 +131,7 @@ export default function Donation() {
             value={formData.fullName}
             onChange={handleInputChange}
             placeholder="Full Name"
-            className="w-full p-3 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full p-3 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
             required
           />
           <input
@@ -138,11 +140,10 @@ export default function Donation() {
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Email"
-            className="w-full p-3 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full p-3 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
             required
           />
 
-          {/* Show these only when Card payment method is selected */}
           {selectedMethod === "Card" && (
             <>
               <input
@@ -151,7 +152,7 @@ export default function Donation() {
                 value={formData.cardNumber}
                 onChange={handleInputChange}
                 placeholder="Card Number"
-                className="w-full p-3 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full p-3 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                 required
               />
               <div className="flex space-x-2">
@@ -161,7 +162,7 @@ export default function Donation() {
                   value={formData.expiryDate}
                   onChange={handleInputChange}
                   placeholder="MM/YY"
-                  className="w-1/2 p-3 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-1/2 p-3 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                   required
                 />
                 <input
@@ -170,7 +171,7 @@ export default function Donation() {
                   value={formData.cvc}
                   onChange={handleInputChange}
                   placeholder="CVC"
-                  className="w-1/2 p-3 rounded-lg bg-gray-200 text-gray-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-1/2 p-3 rounded-lg bg-gray-200 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
                   required
                 />
               </div>
@@ -181,14 +182,15 @@ export default function Donation() {
             type="submit"
             disabled={isSubmitting}
             className={`w-full p-3 ${
-              isSubmitting ? "bg-gray-400" : "bg-black"
-            } text-white font-semibold rounded-lg mt-3 hover:bg-gray-500 transition-all duration-300 shadow-md`}
+              isSubmitting ? "bg-gray-400" : "bg-black dark:bg-blue-600"
+            } text-white font-semibold rounded-lg mt-3 hover:bg-gray-700 dark:hover:bg-blue-700 transition-all duration-300 shadow-md`}
           >
             {isSubmitting ? "Processing..." : `Donate ₹${amount}`}
           </button>
         </form>
       </div>
-      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
+
+      <footer className="dark:bg-gray-950 bg-gray-100 dark:text-white text-gray-700 text-center py-6 mt-12 w-full transition-all duration-300">
         <div className="flex justify-center space-x-6 mb-4">
           <a href="#" className="text-blue-600 hover:text-blue-800">
             <FaFacebook size={24} />

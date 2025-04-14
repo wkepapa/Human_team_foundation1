@@ -1,4 +1,5 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+"use client";
+import React, { useState, ChangeEvent, FormEvent, useRef } from "react";
 import "./Upcoming.css";
 import axios from "axios";
 
@@ -7,8 +8,8 @@ interface EventData {
   description: string;
   startDate: string;
   endDate: string;
-  images: string | null;
   imageName?: string;
+  imagePreview?: string;
 }
 
 export default function Past(): JSX.Element {
@@ -17,73 +18,69 @@ export default function Past(): JSX.Element {
     description: "",
     startDate: "",
     endDate: "",
-    images: null,
     imageName: "",
+    imagePreview: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function handleChange(
+  const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void {
+  ): void => {
     const { name, value } = e.target;
     setEvent((prev) => ({
       ...prev,
       [name]: value,
     }));
-  }
+  };
 
-  function handleImageChange(e: ChangeEvent<HTMLInputElement>): void {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setEvent((prev) => ({
           ...prev,
-          images: reader.result as string,
+          imagePreview: reader.result as string,
           imageName: file.name,
         }));
       };
       reader.readAsDataURL(file);
     }
-  }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Basic validation
-    if (
-      !event.name ||
-      !event.description ||
-      !event.startDate ||
-      !event.endDate
-    ) {
-      alert("Please fill out all required fields.");
-      return;
+    const formData = new FormData();
+    formData.append("name", event.name);
+    formData.append("description", event.description);
+    formData.append("startDate", event.startDate);
+    formData.append("endDate", event.endDate);
+    formData.append("isPast", "true");
+
+    const file = fileInputRef.current?.files?.[0];
+    if (file) {
+      formData.append("eventImage", file); // match backend field
     }
 
-    setLoading(true);
     try {
-      const eventData = {
-        ...event,
-        isPast: true,
-      };
-
-      await axios.post("http://localhost:5000/api/events", eventData);
-
-      // Reset form
+      await axios.post("http://localhost:5000/api/events", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      alert("Past event added successfully!");
       setEvent({
         name: "",
         description: "",
         startDate: "",
         endDate: "",
-        images: null,
         imageName: "",
+        imagePreview: "",
       });
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (error) {
-      console.error("Error adding event:", error);
-    } finally {
-      setLoading(false);
+      alert("Failed to add event. Please try again.");
+      console.error(error);
     }
   };
 
@@ -126,12 +123,12 @@ export default function Past(): JSX.Element {
           onChange={handleChange}
         />
 
-        <label htmlFor="images">Add Image:</label>
+        <label htmlFor="image">Add Image:</label>
         <input
           type="file"
-          id="images"
-          name="images"
+          id="image"
           accept="image/*"
+          ref={fileInputRef}
           onChange={handleImageChange}
         />
 
@@ -141,16 +138,14 @@ export default function Past(): JSX.Element {
           </p>
         )}
 
-        {event.images && (
+        {event.imagePreview && (
           <div style={{ marginTop: "10px" }}>
             <strong>Preview:</strong>
-            <img src={event.images} alt="Event preview" width="200" />
+            <img src={event.imagePreview} alt="Preview" width="200" />
           </div>
         )}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Adding..." : "Add"}
-        </button>
+        <button type="submit">Add Past Event</button>
       </form>
     </div>
   );

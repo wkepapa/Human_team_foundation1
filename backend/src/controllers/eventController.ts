@@ -1,12 +1,27 @@
-import { Request, Response } from 'express';
-import Event from '../models/eventModel';
+import { Request, Response } from "express";
+import Event from "../models/eventModel";
+import { uploadOnCloudinary } from "../utils/cloudinary";
 
-export const createEvent = async (req: Request, res: Response) => {
+export const createEvent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const newEvent = new Event(req.body);
+    const imageUrl = req.file ? await uploadOnCloudinary(req.file.path) : "";
+
+    const newEvent = new Event({
+      ...req.body,
+      imageUrl: imageUrl,
+    });
+
     await newEvent.save();
-    res.status(201).json({ message: "Event created successfully" });
+
+    res.status(201).json({
+      message: "Event created successfully",
+      event: newEvent,
+    });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Failed to create event" });
   }
 };

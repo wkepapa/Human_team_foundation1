@@ -6,8 +6,8 @@ const eventSchema = new mongoose.Schema(
     description: { type: String, required: true },
     startDate: { type: String, required: true },
     endDate: { type: String, required: true },
-    images: { type: String }, // Base64 data
-    imageName: { type: String }, // Original file name
+    imageUrl: { type: String },
+    imageName: { type: String },
     isPast: { type: Boolean, default: false },
   },
   { timestamps: true }

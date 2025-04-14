@@ -54,12 +54,12 @@ function Navbar({ className }: { className?: string }) {
         >
           Volunteer Registration
         </button>
-        <button
+        {/* <button
           onClick={() => router.push("/Admin")}
           className="focus:outline-none hover:text-gray-400 hover:scale-105 transition-transform duration-300 px-3 py-1 rounded-md"
         >
           Admin
-        </button>
+        </button> */}
       </nav>
     </div>
   );

@@ -94,7 +94,7 @@ export default function Home() {
       </div>
       <TimelineDemo />
 
-      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
+      <footer className="dark:bg-gray-950 bg-gray-100 dark:text-white text-gray-700 text-center py-3 mt-12 w-full transition-all duration-300">
         <div className="flex justify-center space-x-6 mb-4">
           <a href="#" className="text-blue-600 hover:text-blue-800">
             <FaFacebook size={24} />
@@ -106,7 +106,6 @@ export default function Home() {
             <FaLinkedin size={24} />
           </a>
         </div>
-
         <p className="text-sm">
           © {new Date().getFullYear()} Human Team Foundation. All rights
           reserved.

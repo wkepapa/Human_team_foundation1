@@ -41,7 +41,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         </p>
       </div>
 
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
+      <div ref={ref} className="relative max-w-7xl mx-auto pb-10">
         {data.map((item, index) => (
           <div
             key={index}
@@ -66,7 +66,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         ))}
 
         {/* ✨ Spacer to allow scroll progress */}
-        <div className="h-[100vh] w-full pointer-events-none opacity-0" />
+        <div className="h-[40vh] w-full pointer-events-none opacity-0" />
 
         {/* 🌈 Animated vertical line */}
         <div

@@ -4,33 +4,31 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { NavbarDemo } from "../Navbar/page";
-import axiosInstance from "@/utils/axios"
+import axiosInstance from "@/utils/axios";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function VolunteerSignupForm() {
-  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    const form = e.currentTarget;
+    const formData = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      skills: (form.elements.namedItem("skills") as HTMLInputElement).value,
+    };
 
-  const form = e.currentTarget;
-  const formData = {
-    name: (form.elements.namedItem("name") as HTMLInputElement).value,
-    email: (form.elements.namedItem("email") as HTMLInputElement).value,
-    phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
-    skills: (form.elements.namedItem("skills") as HTMLInputElement).value,
+    try {
+      const response = await axiosInstance.post("/volunteers", formData);
+      console.log("Volunteer submitted:", response.data);
+      alert("Thanks for signing up!");
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting volunteer form:", error);
+      alert("Failed to submit. Please try again.");
+    }
   };
-
-  try {
-    const response = await axiosInstance.post("/volunteers", formData);
-    console.log("Volunteer submitted:", response.data);
-    alert("Thanks for signing up!");
-    form.reset();
-  } catch (error) {
-    console.error("Error submitting volunteer form:", error);
-    alert("Failed to submit. Please try again.");
-  }
-};
 
   return (
     <>
@@ -80,8 +78,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           </button>
         </form>
       </div>
-      
-      <footer className="bg-gray-100 text-gray-700 text-center py-6 mt-12 w-full">
+      <footer className="dark:bg-gray-950 bg-gray-100 dark:text-white text-gray-700 text-center py-6 mt-12 w-full transition-all duration-300">
         <div className="flex justify-center space-x-6 mb-4">
           <a href="#" className="text-blue-600 hover:text-blue-800">
             <FaFacebook size={24} />
@@ -93,7 +90,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             <FaLinkedin size={24} />
           </a>
         </div>
-        <p className="text-sm">© {new Date().getFullYear()} Human Team Foundation. All rights reserved.</p>
+        <p className="text-sm">
+          © {new Date().getFullYear()} Human Team Foundation. All rights
+          reserved.
+        </p>
       </footer>
     </>
   );
