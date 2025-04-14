@@ -7,7 +7,8 @@ import getAllVolunteers from "./src/routes/volunteerRoutes";
 import cors from "cors";
 import acceptVolunteer from "./src/routes/volunteerRoutes";
 import sendMessageRoute from "./src/routes/sendMessage";
-import getevents from "./src/routes/eventRoutes";
+import eventRoutes from "./src/routes/eventRoutes";
+import bodyParser from "body-parser";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -15,6 +16,8 @@ const app = express();
 
 // Enable CORS for all origins
 app.use(cors()); // This should come before the routes
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
 app.use(express.json()); // Middleware to parse JSON request bodies
 
@@ -23,7 +26,8 @@ app.use("/api/donations", donationRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/volunteers", getAllVolunteers);
 app.use("/api/volunteers", acceptVolunteer);
-app.use("/api/events", getevents); // Use the event routes
+app.use("/api/events", eventRoutes);
+// Use the event routes
 app.use("/api", sendMessageRoute);
 
 // Connect to MongoDB using the environment variable for the connection string

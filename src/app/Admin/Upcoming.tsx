@@ -1,6 +1,5 @@
 "use client";
-import React, { useState, ChangeEvent, FormEvent, useRef } from "react";
-import "./Upcoming.css";
+import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 
 interface EventData {
@@ -8,8 +7,6 @@ interface EventData {
   description: string;
   startDate: string;
   endDate: string;
-  imageName?: string;
-  imagePreview?: string;
 }
 
 export default function Upcoming(): JSX.Element {
@@ -18,15 +15,14 @@ export default function Upcoming(): JSX.Element {
     description: "",
     startDate: "",
     endDate: "",
-    imageName: "",
-    imagePreview: "",
   });
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [postToInstagram, setPostToInstagram] = useState<boolean>(false);
+  const [image, setImage] = useState<File | null>(null);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
+  ) => {
     const { name, value } = e.target;
     setEvent((prev) => ({
       ...prev,
@@ -34,18 +30,10 @@ export default function Upcoming(): JSX.Element {
     }));
   };
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setEvent((prev) => ({
-          ...prev,
-          imagePreview: reader.result as string,
-          imageName: file.name,
-        }));
-      };
-      reader.readAsDataURL(file);
+      setImage(file);
     }
   };
 
@@ -57,124 +45,101 @@ export default function Upcoming(): JSX.Element {
     formData.append("description", event.description);
     formData.append("startDate", event.startDate);
     formData.append("endDate", event.endDate);
-
-    const file = fileInputRef.current?.files?.[0];
-    if (file) {
-      formData.append("eventImage", file); // Must match `upload.single("eventImage")`
-    }
+    formData.append("isPast", "false");
+    formData.append("postToInstagram", String(postToInstagram));
+    if (image) formData.append("image", image);
 
     try {
       await axios.post("http://localhost:5000/api/events", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       alert("Event added successfully!");
-      setEvent({
-        name: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-        imageName: "",
-        imagePreview: "",
-      });
-      if (fileInputRef.current) fileInputRef.current.value = "";
+      setEvent({ name: "", description: "", startDate: "", endDate: "" });
+      setPostToInstagram(false);
+      setImage(null);
     } catch (error) {
       alert("Failed to add event. Please try again.");
       console.error(error);
     }
   };
 
-  const postToInstagram = async () => {
-    try {
-      const file = fileInputRef.current?.files?.[0];
-      if (!file) {
-        alert("Please select an image to post.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64Image = reader.result;
-        await axios.post("http://localhost:5000/api/instagram/post", {
-          name: event.name,
-          description: event.description,
-          startDate: event.startDate,
-          endDate: event.endDate,
-          image: base64Image,
-        });
-        alert("Event posted to Instagram successfully!");
-      };
-
-      reader.readAsDataURL(file);
-    } catch (err) {
-      console.error("Error posting to Instagram", err);
-      alert("Failed to post to Instagram.");
-    }
-  };
-
   return (
-    <div className="upcoming">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name of the Event:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={event.name}
-          onChange={handleChange}
-        />
+    <div className="upcoming p-6 max-w-xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block">
+          <span className="text-gray-700">Name of the Event:</span>
+          <input
+            type="text"
+            name="name"
+            value={event.name}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded px-3 py-2"
+          />
+        </label>
 
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          value={event.description}
-          onChange={handleChange}
-          rows={5}
-        />
+        <label className="block">
+          <span className="text-gray-700">Description:</span>
+          <textarea
+            name="description"
+            value={event.description}
+            onChange={handleChange}
+            rows={4}
+            className="mt-1 block w-full border rounded px-3 py-2"
+          />
+        </label>
 
-        <label htmlFor="startDate">Start Date:</label>
-        <input
-          type="date"
-          id="startDate"
-          name="startDate"
-          value={event.startDate}
-          onChange={handleChange}
-        />
+        <label className="block">
+          <span className="text-gray-700">Start Date:</span>
+          <input
+            type="date"
+            name="startDate"
+            value={event.startDate}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded px-3 py-2"
+          />
+        </label>
 
-        <label htmlFor="endDate">End Date:</label>
-        <input
-          type="date"
-          id="endDate"
-          name="endDate"
-          value={event.endDate}
-          onChange={handleChange}
-        />
+        <label className="block">
+          <span className="text-gray-700">End Date:</span>
+          <input
+            type="date"
+            name="endDate"
+            value={event.endDate}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded px-3 py-2"
+          />
+        </label>
 
-        <label htmlFor="image">Add Image:</label>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handleImageChange}
-        />
+        <label className="block">
+          <span className="text-gray-700">Event Banner Image:</span>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="mt-1 block w-full border rounded px-3 py-2 bg-white"
+          />
+        </label>
 
-        {event.imageName && (
-          <p style={{ fontStyle: "italic", marginTop: "5px" }}>
-            Selected file: {event.imageName}
-          </p>
-        )}
+        <div className="flex items-center justify-between pt-2">
+          <span className="text-gray-700">Post to Instagram</span>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={postToInstagram}
+              onChange={() => setPostToInstagram((prev) => !prev)}
+            />
+            <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:bg-green-400 transition-all duration-300" />
+            <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 peer-checked:translate-x-5" />
+          </label>
+        </div>
 
-        {event.imagePreview && (
-          <div style={{ marginTop: "10px" }}>
-            <strong>Preview:</strong>
-            <img src={event.imagePreview} alt="Preview" width="200" />
-          </div>
-        )}
-
-        <button type="submit">Add Event</button>
-        <button type="button" onClick={postToInstagram}>
-          Post to Instagram
+        <button
+          type="submit"
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+        >
+          Add
         </button>
       </form>
     </div>
