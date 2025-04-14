@@ -1,28 +1,32 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import axiosInstance from "@/utils/axios";
 
+interface VolunteerType {
+  _id: string;
+  name: string;
+  email: string;
+  accepted: boolean;
+}
+
 export default function Volunteer() {
   const [search, setSearch] = useState("");
-  const [data, setData] = useState([]);
-  const [selectedVolunteer, setSelectedVolunteer] = useState(null);
+  const [data, setData] = useState<VolunteerType[]>([]);
+  const [selectedVolunteer, setSelectedVolunteer] = useState<VolunteerType | null>(null);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchVolunteers = async () => {
       try {
-        const response = await axiosInstance.get("/volunteers");
+        const response = await axiosInstance.get<VolunteerType[]>('/volunteers');
         setData(response.data);
-      } catch (error) {
-        console.error(
-          "Error fetching volunteers:",
-          error.response?.data || error.message
-        );
+        console.log(response);
+      } catch (error: any) {
+        console.error('Error fetching volunteers:', error.response?.data || error.message);
       }
     };
 
@@ -31,10 +35,7 @@ export default function Volunteer() {
 
   const handleAccept = async (id: string) => {
     try {
-      const res = await axiosInstance.patch(
-        `http://localhost:5000/api/volunteers/${id}/accept`
-      );
-
+      const res = await axiosInstance.patch(`http://localhost:5000/api/volunteers/${id}/accept`);
       if (res.status === 200) {
         setData((prev) =>
           prev.map((v) => (v._id === id ? { ...v, accepted: true } : v))
@@ -48,6 +49,11 @@ export default function Volunteer() {
   };
 
   const handleSendMail = async () => {
+    if (!selectedVolunteer?.email || !subject || !body) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("subject", subject);
@@ -152,7 +158,11 @@ export default function Volunteer() {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  setImage(e.target.files[0]);
+                }
+              }}
               className="text-white"
             />
             <div className="flex gap-2 justify-end">
