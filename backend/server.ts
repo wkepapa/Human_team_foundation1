@@ -29,7 +29,7 @@ app.use("/api", sendMessageRoute);
 // Connect to MongoDB using the environment variable for the connection string
 
 mongoose
-  .connect(process.env.MONGODB_URI as string, {})
+  .connect(process.env.MONGO_URI as string, {})
 
   .then(() => {
     console.log("Connected to MongoDB");
